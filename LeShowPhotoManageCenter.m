@@ -21,20 +21,20 @@
  
  文件结构
  
-            NSHomeDir
-                |
-                V
-
-            Documents
+ NSHomeDir
+ |
+ V
  
-                |
-                |
-                |
-                V
+ Documents
  
-            PhotoManagerDir
-                |
-                |
+ |
+ |
+ |
+ V
+ 
+ PhotoManagerDir
+ |
+ |
  ----------------------------------
  |              |                 |
  V              V                 V
@@ -50,14 +50,14 @@
     NSUserDefaults *myUserDefault = [NSUserDefaults standardUserDefaults];
     NSArray *array = [myUserDefault objectForKey:kAlbumList];
     
-
+    
     return array;
     
     
 }
--(NSArray*)thumbList
+-(NSArray*)thumbUrlForAblum:(NSString*)album
 {
-    NSArray *albumList = [self albumList];
+    NSArray *albumList = [self photoURLForAlbum:album];
     NSMutableArray *array = [NSMutableArray array];
     for (NSString *str in albumList) {
         NSString *path = [NSString stringWithFormat:@"%@thumb",str];
@@ -118,7 +118,7 @@
     [array addObject:name];
     
     
-//    add a dir
+    //    add a dir
     NSFileManager *manager = [NSFileManager defaultManager];
     
     
@@ -127,7 +127,7 @@
     if (!flag) {
         [manager createDirectoryAtPath:managerDirPath withIntermediateDirectories:YES attributes:nil error:nil];
     }
-//    exist
+    //    exist
     
     
     NSString *albumPath = [NSString stringWithFormat:@"%@/%@",managerDirPath,name];
@@ -136,7 +136,7 @@
     
     if (success) {
         
-
+        
         
         
         
@@ -167,7 +167,7 @@
             return sucess;
         }else
         {
-        
+            
         }
     }
     return NO;
@@ -180,10 +180,10 @@
 //添加图片
 -(void)addPhoto:(UIImage*)image toAlbum:(NSString*)name
 {
-//    NSArray *albumListArray = [self listForAlbum:name];
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//    __block BOOL arrayflag = NO;
-        NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+    //    NSArray *albumListArray = [self listForAlbum:name];
+    //    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    //    __block BOOL arrayflag = NO;
+    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
         NSData *data = UIImageJPEGRepresentation(image, 1.0);
         NSData *smallData = UIImageJPEGRepresentation(image, 0.0);
         NSMutableArray *photoNameArray = [[self photoListFromAlbum:name] mutableCopy];
@@ -202,10 +202,10 @@
             
             
             
-
-        [photoNameArray writeToFile:path atomically:YES];
             
-
+            [photoNameArray writeToFile:path atomically:YES];
+            
+            
         }
     }];
     
@@ -214,7 +214,7 @@
     
     
     
-
+    
     
 }
 
@@ -223,7 +223,7 @@
     NSString *str = [NSString stringWithFormat:@"%ld",random()];
     if ([set containsObject:str]) {
         return [self getStringOutOfSet:set];
-            }
+    }
     return str;
 }
 //删除图片

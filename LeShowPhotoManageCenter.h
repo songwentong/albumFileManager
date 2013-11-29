@@ -25,8 +25,7 @@
 
 //相册列表
 -(NSArray*)albumList;
-//缩略图路径
--(NSArray*)thumbList;
+
 
 //添加相册
 -(BOOL)addPhotoAlbums:(NSString*)name;
@@ -37,7 +36,8 @@
 -(NSArray*)photoURLForAlbum:(NSString*)name;
 //相册名字列表
 -(NSArray*)photoListFromAlbum:(NSString*)name;
-
+//缩略图路径
+-(NSArray*)thumbUrlForAblum:(NSString*)album;
 
 //添加图片
 -(void)addPhoto:(UIImage*)image toAlbum:(NSString*)name;
